@@ -1,81 +1,53 @@
-function Cell(x, y, w) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    if (random(1) < 0.5) {
-        this.bee = true;
-    } else {
-        this.bee = false;
-    }
-    this.revealed = false;
-}
-
-Cell.prototype.show = function() {
-    stroke(0);
-    noFill();
-    rect(this.x, this.y, this.w, this.w);
-    if (this.revealed) {
-        if (this.bee) {
-            ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.5);
-        }
-    }
-}
-
-Cell.prototype.contains = function(x, y) {
-    return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w) 
-}
-
-Cell.prototype.reveal = function() {
-    this.revealed = true;
-}
-
-function make2DArray(rows, cols) {
-    var arr = new Array(rows);
-    for (var i = 0; i < arr.length; i++) {
-        arr[i] = new Array(cols);
-    }
-    return arr;
-}
-
-var grid;
-var rows = 20;
-var cols = 20;
-var w = 20;
+var grid ,rows, cols;
+var w_size = 30;
+var onPressed = false;
 
 function setup() {
-    var canvasDiv = document.getElementById('maze_container');
-    var widthDiv = floor(canvasDiv.offsetWidth);
-    var heightDiv = floor(canvasDiv.offsetHeight);
-    console.log(widthDiv);
-    console.log(heightDiv);
+    var div = document.getElementById('maze_container');
+    var height = floor(div.offsetHeight);
+    var width = floor(div.offsetWidth);
 
-    var canvas = createCanvas(widthDiv, heightDiv);
-    canvas.parent('maze_container');
-    cols = floor(widthDiv / w);
-    rows = floor(heightDiv / w);
-    grid = make2DArray(rows, cols);
+    var canvas_div = createCanvas(width, height);
+    canvas_div.parent('maze_container');
+
+    // creates 2DArray as grid[rows][cols]
+    rows = floor(height / w_size);
+    cols = floor(width / w_size);
+    grid = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+        grid[i] = new Array(cols);
+    }
+
+    // each value in grid is a cell
     for (var i = 0; i < rows; i++) {
         for (var j = 0; j < cols; j++) {
-            grid[i][j] = new Cell(i * w, j * w, w);
-        }
-    }
-}
-
-function mousePressed() {
-    for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-            if (grid[i][j].contains(mouseX, mouseY)) {
-                grid[i][j].reveal();
-            }
+            grid[i][j] = new Cell(j * w_size, i * w_size, w_size);
         }
     }
 }
 
 function draw() {
     background(255);
-    for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-            grid[i][j].show();
+    for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < cols; j++) {
+            grid[i][j].draw();
         }
     }
+
+    if (onPressed) {
+        var x = floor(mouseY / w_size); // x is the row(height)
+        var y = floor(mouseX / w_size); // y is the col(width)
+        if (x >= 0 && x < rows && y >= 0 && y < cols) {
+            grid[x][y].fill = true;
+        }
+        console.log(x, y)
+    }
+}
+
+function mousePressed() {
+    onPressed = true;
+}
+
+function mouseReleased() {
+    onPressed = false;
 }

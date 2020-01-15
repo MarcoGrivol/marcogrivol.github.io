@@ -43,16 +43,9 @@ var cols = 20;
 var w = 20;
 
 function setup() {
-    var canvasDiv = document.getElementById('container');
-    var widthDiv = floor(canvasDiv.offsetWidth);
-    var heightDiv = floor(canvasDiv.offsetHeight);
-    console.log(widthDiv);
-    console.log(heightDiv);
-
-    var canvas = createCanvas(widthDiv, heightDiv);
-    canvas.parent('container');
-    cols = floor(widthDiv / w);
-    rows = floor(heightDiv / w);
+    createCanvas(200, 200);
+    cols = floor(width / w);
+    rows = floor(height / w);
     grid = make2DArray(rows, cols);
     for (var i = 0; i < rows; i++) {
         for (var j = 0; j < cols; j++) {

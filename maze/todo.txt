@@ -1,3 +1,2 @@
-* remove the setup from the reset button
 * create the A* algordon
 * make the slider work with the algordon

@@ -6,9 +6,10 @@
         <title>Maze Runner</title>
     </head>
     <body style="background-color: #bee38a;">
-        <button onclick="setup()">Reset</button>
+        <button onclick="reset()">Reset</button>
         <button onclick="pencil()">Pencil</button>
         <button onclick="eraser()">Eraser</button>
+        <button onclick="go()">Go</button>
         <div class="slidercontainer">
             <input type="range" min="0" max="99" value="50" class="slider" id="rangeSlider">
             <p>Speed: <span id="demo"></span></p>
@@ -17,6 +18,8 @@
         <script src="../p5.js"></script>
         <script src="cell.js"></script>
         <script src="maze_script.js"></script>
+        <script src="buttons.js"></script>
+        <script src="algorithms.js"></script>
         <script>
             var slider = document.getElementById("rangeSlider");
             var output = document.getElementById("demo");

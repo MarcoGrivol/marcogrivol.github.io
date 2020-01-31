@@ -2,6 +2,8 @@ function Cell(x, y, w_size, start, finish) {
     this.x = x;
     this.y = y;
     this.w = w_size;
+    this.i = this.x / this.w;
+    this.j = this.y / this.w;
     this.fill = false;
     this.predecessor = null;
     this.lambda = Infinity;

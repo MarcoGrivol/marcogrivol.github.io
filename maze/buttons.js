@@ -5,6 +5,7 @@ function reset() {
             // only reset normal cell, ignore start and finish
             if (grid[i][j].start != true && grid[i][j].finish != true) {
                 grid[i][j].fill = false;
+                grid[i][j].path = false;
             }
         }
     }
@@ -21,5 +22,9 @@ function eraser() {
 }
 
 function go() {
+    noLoop();
+    console.log("noloop");
     dijkstra();
+    console.log("acabou dijikstra");
+    delay(3000);
 }

@@ -22,9 +22,21 @@ function eraser() {
 }
 
 function go() {
-    noLoop();
     console.log("noloop");
-    dijkstra();
+    //dijkstra();
+    noLoop();
+    for (var k = 0; k < 9; k++) {
+        clear();
+        grid[0][0].fill = !grid[0][0].fill;
+        background(255);
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                grid[i][j].paintCell();
+            }
+        }
+        console.log("devia ter mudado");
+        delay(750);
+    }
     console.log("acabou dijikstra");
-    delay(3000);
+    delay(1000);
 }

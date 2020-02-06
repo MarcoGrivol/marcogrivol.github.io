@@ -5,6 +5,7 @@ function Cell(x, y, w_size, start, finish) {
     this.i = this.x / this.w;
     this.j = this.y / this.w;
     this.fill = false;
+    this.path = false;
     this.predecessor = null;
     this.lambda = Infinity;
     if (start) {
@@ -22,18 +23,26 @@ function Cell(x, y, w_size, start, finish) {
     }
 }
 
-Cell.prototype.draw = function() {
+Cell.prototype.paintCell = function() {
     stroke(0);
+    // if (this.fill) {
+    //     // start and finish shall have different colors
+    //     if (this.start) {
+    //         fill('blue');
+    //     }
+    //     else if(this.finish) {
+    //         fill('red');
+    //     } 
+    //     else if (this.path) {
+    //         fill('gray');
+    //     } else {
+    //         fill('black');
+    //     }
+    // } else {
+    //     noFill();
+    // }
     if (this.fill) {
-        // start and finish shall have different colors
-        if (this.start) {
-            fill('blue');
-        }
-        else if(this.finish) {
-            fill('red');
-        } else {
-            fill('black');
-        }
+        fill('blue');
     } else {
         noFill();
     }

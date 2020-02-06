@@ -47,10 +47,11 @@ function setup() {
 }
 
 function draw() {
+    console.log("1");
     background(255);
     for (var i = 0; i < rows; i++) {
         for (var j = 0; j < cols; j++) {
-            grid[i][j].draw();
+            grid[i][j].paintCell();
         }
     }
 
@@ -76,3 +77,5 @@ function mousePressed() {
 function mouseReleased() {
     onPressed = false;
 }
+
+// calls a copy of the draw function

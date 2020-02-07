@@ -20,17 +20,24 @@ function setup () {
     array = shuffleArray(array);
     w_size = width / array.length;
     h_size = height / array.length;
-    console.log(array);
-    //mergeSort();
-    console.log(array);
-    frameRate(1);
+    frameRate(10);
 }
 
-var tmp = 1;
+var tmp = null;
+var sorting_mode = null;
 function draw () {
     background(255);
     drawArray();
-    tmp = mergeSort(tmp);
+    switch (sorting_mode) {
+        case "bubble":
+            tmp = bubblesort(tmp);
+            break;
+        case "merge":
+            tmp = mergeSort(tmp);
+            break;
+        default:
+            break;
+    }
 }
 
 function drawArray() {
@@ -44,7 +51,7 @@ function drawArray() {
 function bubblesort(tmp) {
     var i = tmp - 1;
     while (i < array.length && i < tmp + 1) {
-        for (var j = 0; j < array.length - 1; j++) {
+        for (var j = 0; j < array.length - 1 - i; j++) {
             if (array[j + 1] < array[j]) {
                 var aux = array[j];
                 array[j] = array[j + 1];
@@ -56,83 +63,61 @@ function bubblesort(tmp) {
     return ++tmp;
 }
 
-function mergeSort(tmp) 
-{ 
+// iterative mergeSort from GeeksForGeeks
+function mergeSort(tmp) { 
     var n = array.length;
-   var curr_size = tmp;  // For current size of subarrays to be merged 
-                   // curr_size varies from 1 to n/2 
-   var left_start; // For picking starting index of left subarray 
-                   // to be merged 
-  
-   // Merge subarrays in bottom up manner.  First merge subarrays of 
-   // size 1 to create sorted subarrays of size 2, then merge subarrays 
-   // of size 2 to create sorted subarrays of size 4, and so on. 
-   while (curr_size<=n-1 && curr_size < tmp * 2) 
-   { 
-       // Pick starting point of different subarrays of current size 
-       for (left_start=0; left_start<n-1; left_start += 2*curr_size) 
-       { 
-           // Find ending point of left subarray. mid+1 is starting  
-           // point of right 
-           var mid = min(left_start + curr_size - 1, n-1); 
-  
-           var right_end = min(left_start + 2*curr_size - 1, n-1); 
-  
-           // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end] 
-           merge(left_start, mid, right_end); 
-       } 
-       curr_size = 2 * curr_size;
-   } 
-   return tmp * 2;
+    var curr_size = tmp;
+    // set condition to stop
+    if (curr_size > n - 1) {
+        sorting_mode = null;
+    } 
+    var left_start;
+    while (curr_size <= n - 1 && curr_size < tmp * 2) { 
+        for (left_start = 0; left_start < n - 1; left_start += 2*curr_size) {
+            var mid = min(left_start + curr_size - 1, n - 1); 
+            var right_end = min(left_start + 2 * curr_size - 1, n - 1); 
+            merge(left_start, mid, right_end); 
+        } 
+        curr_size = 2 * curr_size;
+    } 
+    return tmp * 2;
 } 
-  
-/* Function to merge the two haves arr[l..m] and arr[m+1..r] of array arr[] */
-function merge(l, m, r) 
-{ 
+
+function merge(l, m, r) { 
     var i, j, k; 
     var n1 = m - l + 1; 
     var n2 =  r - m; 
-  
-    /* create temp arrays */
     var L = new Array(n1);
     var R = new Array(n2); 
-  
-    /* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < n1; i++) 
-        L[i] = array[l + i]; 
-    for (j = 0; j < n2; j++) 
-        R[j] = array[m + 1+ j]; 
-  
-    /* Merge the temp arrays back into arr[l..r]*/
+
+    for (i = 0; i < n1; i++) {
+        L[i] = array[l + i];
+    } 
+    for (j = 0; j < n2; j++) { 
+        R[j] = array[m + 1 + j];
+    } 
+
     i = 0; 
     j = 0; 
     k = l; 
-    while (i < n1 && j < n2) 
-    { 
-        if (L[i] <= R[j]) 
-        { 
+    while (i < n1 && j < n2) { 
+        if (L[i] <= R[j]) { 
             array[k] = L[i]; 
             i++; 
-        } 
-        else
-        { 
+        } else { 
             array[k] = R[j]; 
             j++; 
         } 
         k++; 
     } 
-  
-    /* Copy the remaining elements of L[], if there are any */
-    while (i < n1) 
-    { 
+
+    while (i < n1) { 
         array[k] = L[i]; 
         i++; 
         k++; 
     } 
-  
-    /* Copy the remaining elements of R[], if there are any */
-    while (j < n2) 
-    { 
+    
+    while (j < n2) { 
         array[k] = R[j]; 
         j++; 
         k++; 

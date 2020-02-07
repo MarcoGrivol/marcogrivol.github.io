@@ -1,0 +1,4 @@
+! can only sort 1 time
+! make speed work
+*** create color picker
+*** add more sorting options

@@ -1,5 +1,4 @@
 // global variables
-var bundle = null;
 var tempo = null;
 var fps = null;
 var sorting_mode = null;
@@ -13,23 +12,30 @@ function setup () {
     var canvas_div = createCanvas(width, height);
     canvas_div.parent('canvas');
     canvas_div.center();
-    // creates random array
-    bundle = new Bundle(width, height, 20);
-    bundle.shuffleArray();
+    // creates the controller for the animations and buttons
+    controller = new Controller(width, height);
+    controller.setNewBundle();
+    frameRate(144);
 }
 
 function draw () {
     background(255);
     bundle.drawArray();
-    switch (sorting_mode) {
-        case "bubble":
-            [tempo, fps] = bundle.bubbleSort(tempo, fps);
-            break;
-        case "merge":
-            tempo = mergeSort(tempo);
-            break;
-        default:
-            break;
+    bundle.drawOverglow();
+    // controls the speed
+    controller.fps_count++;
+    if (controller.fps_count >= controller.fps) {
+        controller.fps_count = 0;
+        switch (controller.sorting_mode) {
+            case "bubble":
+                bundle.bubbleSort();
+                break;
+            case "merge":
+                tempo = mergeSort(tempo);
+                break;
+            default:
+                break;
+        }
     }
 }
 

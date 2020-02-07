@@ -6,13 +6,20 @@
         <title>Maze Runner</title>
     </head>
    <body>
-       <button onclick="setShuffle()">Shuffle</button>
-       <button onclick="setBubbleSort()">Bubble Sort</button>
-       <button onclick="setMergeSort()">Merge Sort</button>
-       <div id="canvas"></div>
-       <script src="../p5.js"></script>
-       <script src="./src/scipt.js"></script>
-       <script src="./src/buttons.js"></script>
-       <script src="./src/array.js"></script>
+        <button onclick="setShuffle()">Shuffle</button>
+        <button onclick="setBubbleSort()">Bubble Sort</button>
+        <button onclick="setMergeSort()">Merge Sort</button>
+        <input type="range" min="1" max="100" value="50" id="speed_slider"">
+        Speed:<span id="show_speed"></span>
+        <input type="range" min="2" max="300" value="50" id="length_slider">
+        Array Length:<span id="show_length"></span>
+
+        <div id="canvas"></div>
+
+        <script src="../p5.js"></script>
+        <script src="./src/buttons.js"></script>
+        <script src="./src/controller.js"></script>
+        <script src="./src/bundle.js"></script>
+        <script src="./src/scipt.js"></script>
    </body>
 </html>

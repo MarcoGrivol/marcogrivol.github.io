@@ -1,7 +1,8 @@
 function setBubbleSort() {
     sorting_mode = "bubble";
-    tmp = 0;
-    frameRate(30);
+    tmp = 1;
+    fps = 1;
+    frameRate(1);
 }
 
 function setMergeSort() {

@@ -1,7 +1,8 @@
-var array = [];
-var w_size = 0;
-var height = 0;
-var width = 0;
+// global variables
+var bundle = null;
+var tempo = null;
+var fps = null;
+var sorting_mode = null;
 
 function setup () {
     // get div dimensions
@@ -13,66 +14,35 @@ function setup () {
     canvas_div.parent('canvas');
     canvas_div.center();
     // creates random array
-    array = new Array(200);
-    for (var i = 0; i < array.length; i++) {
-        array[i] = i + 1;
-    }
-    array = shuffleArray(array);
-    w_size = width / array.length;
-    h_size = height / array.length;
-    frameRate(10);
+    bundle = new Bundle(width, height, 20);
+    bundle.shuffleArray();
 }
 
-var tmp = null;
-var sorting_mode = null;
 function draw () {
     background(255);
-    drawArray();
+    bundle.drawArray();
     switch (sorting_mode) {
         case "bubble":
-            tmp = bubblesort(tmp);
+            [tempo, fps] = bundle.bubbleSort(tempo, fps);
             break;
         case "merge":
-            tmp = mergeSort(tmp);
+            tempo = mergeSort(tempo);
             break;
         default:
             break;
     }
 }
 
-function drawArray() {
-    for (var i = 0; i < array.length; i++) {
-        stroke(0);
-        fill('blue');
-        rect(i * w_size, 0, w_size, h_size * array[i]);
-    }
-}
-
-function bubblesort(tmp) {
-    var i = tmp - 1;
-    while (i < array.length && i < tmp + 1) {
-        for (var j = 0; j < array.length - 1 - i; j++) {
-            if (array[j + 1] < array[j]) {
-                var aux = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = aux;
-            }
-        }
-        i++;
-    }
-    return ++tmp;
-}
-
 // iterative mergeSort from GeeksForGeeks
-function mergeSort(tmp) { 
+function mergeSort(tempo) { 
     var n = array.length;
-    var curr_size = tmp;
+    var curr_size = tempo;
     // set condition to stop
     if (curr_size > n - 1) {
         sorting_mode = null;
     } 
     var left_start;
-    while (curr_size <= n - 1 && curr_size < tmp * 2) { 
+    while (curr_size <= n - 1 && curr_size < tempo * 2) { 
         for (left_start = 0; left_start < n - 1; left_start += 2*curr_size) {
             var mid = min(left_start + curr_size - 1, n - 1); 
             var right_end = min(left_start + 2 * curr_size - 1, n - 1); 
@@ -80,7 +50,7 @@ function mergeSort(tmp) {
         } 
         curr_size = 2 * curr_size;
     } 
-    return tmp * 2;
+    return tempo * 2;
 } 
 
 function merge(l, m, r) { 
@@ -123,14 +93,3 @@ function merge(l, m, r) {
         k++; 
     } 
 } 
-
-function shuffleArray (array) {
-    var tmp, current, top = array.length;
-    if(top) while(--top) {
-        current = Math.floor(Math.random() * (top + 1));
-        tmp = array[current];
-        array[current] = array[top];
-        array[top] = tmp;
-      }
-    return array;
-}

@@ -53,26 +53,30 @@ class Bundle {
         }
     }
 
+    swap(i, j) {
+        var tmp = this.array[i];
+        this.array[i] = this.array[j];
+        this.array[j] = tmp;
+    }
+
     // using if statments instead of while or for loops allows the p5.js draw()
     // to draw each movement of the bubbleSort()
-    bubbleSort(tempo_i, tempo_j) {
+    bubbleSort() {
         var i = controller.tempo_i - 1;
         var j = controller.tempo_j - 1;
+        var swap = false;
         // draw and add to overglow
-        this.drawElement(j, '0, 242, 255');
         this.resetOverglow();
         this.addToOverglow(j, '0, 242, 255');
         
         if (i < this.array.length) {
             if (j < this.array.length - 1 - i) {
                 if (this.array[j + 1] < this.array[j]) {
-                    // draw and add to overglow
-                    this.drawElement(j + 1, 'red');
-                    this.addToOverglow(j + 1, 'red');
                     // swap
                     var aux = this.array[j];
                     this.array[j] = this.array[j + 1];
                     this.array[j + 1] = aux;
+                    this.addToOverglow(j + 1, 'red');
                 } 
             } else { // would happen at the end of the for j loop
                 controller.tempo_j = 0;

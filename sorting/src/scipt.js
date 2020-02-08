@@ -15,16 +15,16 @@ function setup () {
     // creates the controller for the animations and buttons
     controller = new Controller(width, height);
     controller.setNewBundle();
-    frameRate(144);
 }
 
 function draw () {
     background(255);
     bundle.drawArray();
     bundle.drawOverglow();
+
     // controls the speed
     controller.fps_count++;
-    if (controller.fps_count >= controller.fps) {
+    if (controller.fps_count >= floor(frameRate() / controller.fps)) {
         controller.fps_count = 0;
         switch (controller.sorting_mode) {
             case "bubble":

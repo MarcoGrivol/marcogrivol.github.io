@@ -1,6 +1,6 @@
 class Controller {
     constructor (width, height) {
-        this.fps = 50; // should be the same as in main.html speed_slider
+        this.fps = 15; // should be the same as in main.html speed_slider
         this.fps_count = 0;
         this.tempo_i = null;
         this.tempo_j = null;

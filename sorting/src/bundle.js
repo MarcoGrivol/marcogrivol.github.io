@@ -62,13 +62,10 @@ class Bundle {
     // using if statments instead of while or for loops allows the p5.js draw()
     // to draw each movement of the bubbleSort()
     bubbleSort() {
+        this.resetOverglow();
+
         var i = controller.tempo_i - 1;
         var j = controller.tempo_j - 1;
-        var swap = false;
-        // draw and add to overglow
-        this.resetOverglow();
-        this.addToOverglow(j, '0, 242, 255');
-        
         if (i < this.array.length) {
             if (j < this.array.length - 1 - i) {
                 if (this.array[j + 1] < this.array[j]) {
@@ -76,8 +73,11 @@ class Bundle {
                     var aux = this.array[j];
                     this.array[j] = this.array[j + 1];
                     this.array[j + 1] = aux;
-                    this.addToOverglow(j + 1, 'red');
-                } 
+                    this.addToOverglow(j + 1, '0, 242, 255');
+                    this.addToOverglow(j, 'red');
+                } else {
+                    this.addToOverglow(j, '0, 242, 255');
+                }
             } else { // would happen at the end of the for j loop
                 controller.tempo_j = 0;
                 controller.tempo_i++;
@@ -90,4 +90,30 @@ class Bundle {
             return;
         }
     }
-}
+
+    // algorithm adapted from Introduction to Algorithms, Third Edition - CLRS
+    insertionSort(key) {
+        var j = controller.tempo_j; // starts at 1, tempo_j sums 1 every iteration
+        this.resetOverglow();
+        this.addToOverglow(j, 'blue');
+        if (j < this.array.length) {
+            var i = j - controller.tempo_i; // starts at 0, tempo_i sums 1 every iteration
+            if (i >= 0 && this.array[i] > controller.key) {
+                this.array[i + 1] = this.array[i];
+                this.addToOverglow(i, 'red')
+                controller.tempo_i++;
+            } else {
+                controller.tempo_j++;
+                controller.tempo_i = 1;
+                this.array[i + 1] = controller.key;
+                if (j <= this.array.length - 2) {
+                    controller.key = this.array[j + 1];
+                }
+            }
+        } else {
+            delete(controller.key);
+            controller.sorting_mode = null;
+            console.log(this.array);
+        }
+    }
+} 

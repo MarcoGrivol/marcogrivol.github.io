@@ -2,3 +2,4 @@
 ! make speed work
 *** create color picker
 *** add more sorting options
+*** stop algo when new shuffle

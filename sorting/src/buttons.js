@@ -27,6 +27,12 @@ function setBubbleSort() {
     controller.resetFpsAndTempo();
 }
 
+function setInsertionSort() {
+    controller.sorting_mode = "insertion";
+    controller.resetFpsAndTempo();
+    controller.key = bundle.array[1];
+}
+
 function setMergeSort() {
     sorting_mode = "merge";
     tmp = 1;

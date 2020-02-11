@@ -30,6 +30,9 @@ function draw () {
             case "bubble":
                 bundle.bubbleSort();
                 break;
+            case "insertion":
+                bundle.insertionSort(key);
+                break;
             case "merge":
                 tempo = mergeSort(tempo);
                 break;

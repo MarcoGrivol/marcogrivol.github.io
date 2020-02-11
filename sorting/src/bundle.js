@@ -63,7 +63,6 @@ class Bundle {
     // to draw each movement of the bubbleSort()
     bubbleSort() {
         this.resetOverglow();
-
         var i = controller.tempo_i - 1;
         var j = controller.tempo_j - 1;
         if (i < this.array.length) {
@@ -92,10 +91,10 @@ class Bundle {
     }
 
     // algorithm adapted from Introduction to Algorithms, Third Edition - CLRS
-    insertionSort(key) {
+    insertionSort() {
         var j = controller.tempo_j; // starts at 1, tempo_j sums 1 every iteration
         this.resetOverglow();
-        this.addToOverglow(j, 'blue');
+        this.addToOverglow(j, '0, 242, 255');
         if (j < this.array.length) {
             var i = j - controller.tempo_i; // starts at 0, tempo_i sums 1 every iteration
             if (i >= 0 && this.array[i] > controller.key) {
@@ -114,6 +113,53 @@ class Bundle {
             delete(controller.key);
             controller.sorting_mode = null;
             console.log(this.array);
+        }
+    }
+
+    selectionSort() {
+        this.resetOverglow();
+        var i = controller.tempo_i - 1;
+        if (i < this.array.length) {
+            var j = i + controller.tempo_j;
+            if (j < this.array.length) {
+                if (this.array[controller.minimum] > this.array[j]) {
+                    controller.minimum = j;
+                }
+                controller.tempo_j++;
+            } else {
+                this.resetOverglow();
+                this.swap(i, controller.minimum);
+                controller.minimum = i + 1;
+                controller.tempo_j = 1;
+                controller.tempo_i++;
+            }
+        } else {
+            controller.sorting_mode = null;
+            return;
+        }
+        this.addToOverglow(j, '0, 242, 255');
+        this.addToOverglow(controller.minimum, 'red');
+        this.addToOverglow(i, 'orange'); // orange will override any other color
+    }
+
+    partition() {
+        var x = this.array[this.array.length - 1];
+        var i = controller.partition - 1;
+        for (var j = controller.partition; j < this.array.length - 2; j++) {
+            if (this.array[j] <= x) {
+                i = i + 1;
+                this.swap(i, j);
+            }
+        }
+        this.swap(i + 1, this.array.length - 1);
+        return i + 1;
+    }
+
+    quickSort(q) {
+        if (controller.partition < this.array.length - 1) {
+            var q = this.partition();
+            this.quickSort(q - 1);
+            this.quickSort(q + 1);
         }
     }
 } 

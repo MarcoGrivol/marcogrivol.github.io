@@ -22,6 +22,16 @@ length_slider.oninput = function() {
     controller.setNewBundle(); // create a bundle with new length
 }
 
+function setShuffle() {
+    bundle.shuffleArray();
+    sorting_mode = null;
+}
+
+function speedSlider(output) {
+    console.log("hellow", output.innerHTML);
+    output.innerHTML = this.value;
+}
+
 function setBubbleSort() {
     controller.sorting_mode = "bubble";
     controller.resetFpsAndTempo();
@@ -33,18 +43,20 @@ function setInsertionSort() {
     controller.key = bundle.array[1];
 }
 
+function setSelectionSort() {
+    controller.sorting_mode = "selection";
+    controller.resetFpsAndTempo();
+    controller.minimum = 0;
+}
+
+function setQuickSort() {
+    controller.sorting_mode = "quick";
+    controller.resetFpsAndTempo();
+    controller.partition = 0;
+}
+
 function setMergeSort() {
     sorting_mode = "merge";
     tmp = 1;
     frameRate(30);
-}
-
-function setShuffle() {
-    bundle.shuffleArray();
-    sorting_mode = null;
-}
-
-function speedSlider(output) {
-    console.log("hellow", output.innerHTML);
-    output.innerHTML = this.value;
 }

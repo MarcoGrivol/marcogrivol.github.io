@@ -112,7 +112,6 @@ class Bundle {
         } else {
             delete(controller.key);
             controller.sorting_mode = null;
-            console.log(this.array);
         }
     }
 
@@ -135,6 +134,7 @@ class Bundle {
             }
         } else {
             controller.sorting_mode = null;
+            delete (controller.minimum);
             return;
         }
         this.addToOverglow(j, '0, 242, 255');
@@ -142,24 +142,65 @@ class Bundle {
         this.addToOverglow(i, 'orange'); // orange will override any other color
     }
 
-    partition() {
-        var x = this.array[this.array.length - 1];
-        var i = controller.partition - 1;
-        for (var j = controller.partition; j < this.array.length - 2; j++) {
-            if (this.array[j] <= x) {
-                i = i + 1;
-                this.swap(i, j);
+    partitionLoop() {
+        this.resetOverglow();
+        if (controller.tempo_i < controller.tempo_j) {
+            if (this.array[controller.tempo_i] < controller.pivot) {
+                controller.tempo_i++;
+            } else if (this.array[controller.tempo_j] >= controller.pivot) {
+                controller.tempo_j--;
+            } else {
+                this.swap(controller.tempo_i, controller.tempo_j);
             }
+            this.addToOverglow(controller.tempo_i, 'orange');
+            this.addToOverglow(controller.tempo_j, 'red');
+        } else {
+            var index = controller.tempo_j;
+            if (this.array[controller.tempo_j] < controller.pivot) {
+                index++;
+            }
+            this.swap(controller.end - 1, index);
+            controller.partition = index;
+            
+            controller.stack.push(controller.partition + 1);
+            controller.stack.push(controller.end);
+
+            controller.stack.push(controller.start);
+            controller.stack.push(controller.partition);
+
+            controller.partition_loop = false; // end the partition loop
         }
-        this.swap(i + 1, this.array.length - 1);
-        return i + 1;
+        this.addToOverglow(controller.pivot, '0, 242, 255');
     }
 
-    quickSort(q) {
-        if (controller.partition < this.array.length - 1) {
-            var q = this.partition();
-            this.quickSort(q - 1);
-            this.quickSort(q + 1);
+    partition() {
+        controller.tempo_i = controller.start;
+        controller.tempo_j = controller.end - 2;
+        controller.pivot = this.array[controller.partition];
+        this.swap(controller.partition, controller.end - 1);
+    }
+
+    quickSort() {
+        if (controller.stack.length > 0) {
+            controller.end = controller.stack.pop();
+            controller.start = controller.stack.pop();
+
+            if (controller.end - controller.start >= 2) {
+                controller.partition = controller.start + floor((controller.end - controller.start) / 2);
+                
+                this.resetOverglow();
+                this.addToOverglow(controller.pivot, '0, 242, 255');
+                
+                this.partition();
+                controller.partition_loop = true; // stop this function ultil the partition is over
+            }
+        } else {
+            this.resetOverglow();
+            delete (controller.stack);
+            delete (controller.start);
+            delete (controller.end);
+            delete (controller.partition);
+            controller.sorting_mode = null;
         }
     }
 } 

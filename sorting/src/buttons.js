@@ -52,7 +52,14 @@ function setSelectionSort() {
 function setQuickSort() {
     controller.sorting_mode = "quick";
     controller.resetFpsAndTempo();
-    controller.partition = 0;
+    controller.partition = null;
+    controller.pivot = null;
+    controller.start = 0;
+    controller.end = controller.array_length;
+    controller.stack = [controller.start, controller.end];
+    controller.index = null;
+    controller.partition_loop = false; // to simulate the while loop on the partition function
+    controller.quicksort_loop = false; // to simualte the while loop on the quicksort function
 }
 
 function setMergeSort() {

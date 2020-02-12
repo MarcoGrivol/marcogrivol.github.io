@@ -37,10 +37,11 @@ function draw () {
                 bundle.selectionSort();
                 break;
             case "quick":
-                console.log(bundle.array);
-                bundle.quickSort();
-                console.log(bundle.array);
-                controller.sorting_mode = null;
+                if (controller.partition_loop) {
+                    bundle.partitionLoop();
+                } else {
+                    bundle.quickSort();
+                }
                 break;
             case "merge":
                 tempo = mergeSort(tempo);

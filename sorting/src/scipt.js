@@ -44,7 +44,7 @@ function draw () {
                 } console.log(controller.pivot);
                 break;
             case "merge":
-                tempo = mergeSort(tempo);
+                bundle.mergeSort();
                 break;
             default:
                 break;

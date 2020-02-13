@@ -20,11 +20,16 @@ length_slider.oninput = function() {
     length_output.innerHTML = this.value;
     controller.setArrayLength(parseInt(this.value, 10)); // set the new length
     controller.setNewBundle(); // create a bundle with new length
+    controller.sorting_mode = null;
+    controller.resetFpsAndTempo();
+    bundle.resetOverglow();
 }
 
 function setShuffle() {
     bundle.shuffleArray();
-    sorting_mode = null;
+    bundle.resetOverglow();
+    controller.resetFpsAndTempo();
+    controller.sorting_mode = null;
 }
 
 function speedSlider(output) {
@@ -63,7 +68,7 @@ function setQuickSort() {
 }
 
 function setMergeSort() {
-    sorting_mode = "merge";
-    tmp = 1;
-    frameRate(30);
+    controller.sorting_mode = "merge";
+    controller.resetFpsAndTempo();
+    bundle.resetOverglow();
 }

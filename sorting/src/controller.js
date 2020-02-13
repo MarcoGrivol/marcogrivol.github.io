@@ -7,7 +7,7 @@ class Controller {
         this.sorting_mode = null;
         this.width = width;
         this.height = height;
-        this.array_length = 50; // should be the same as in main.html length_slider
+        this.array_length = 6; // should be the same as in main.html length_slider
     }
 
     setArrayLength(length) {

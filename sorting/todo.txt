@@ -3,3 +3,4 @@
 *** create color picker
 *** add more sorting options
 *** stop algo when new shuffle
+*** stop when length changes

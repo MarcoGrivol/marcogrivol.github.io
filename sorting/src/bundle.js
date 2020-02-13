@@ -173,14 +173,6 @@ class Bundle {
         this.addToOverglow(controller.pivot, '0, 242, 255');
     }
 
-    partition() {
-        controller.tempo_i = controller.start;
-        controller.tempo_j = controller.end - 2;
-        controller.pivot = this.array[controller.partition];
-        this.swap(controller.partition, controller.end - 1);
-
-    }
-
     quickSort() {
         if (controller.stack.length > 0) {
             controller.end = controller.stack.pop();
@@ -189,8 +181,14 @@ class Bundle {
             if (controller.end - controller.start >= 2) {
                 controller.partition = controller.start;
                 
-                this.partition();
+                // this is the partition function without the loop
+                controller.tempo_i = controller.start;
+                controller.tempo_j = controller.end - 2;
+                controller.pivot = this.array[controller.partition];
+                this.swap(controller.partition, controller.end - 1);
+
                 controller.partition_loop = true; // stop this function ultil the partition is over
+
                 this.resetOverglow();
                 this.addToOverglow(controller.pivot, '0, 242, 255');
             }
@@ -202,5 +200,21 @@ class Bundle {
             delete (controller.partition);
             controller.sorting_mode = null;
         }
+    }
+
+    merge() {
+        var left = 
+    }
+
+    mergeSort() {
+        var middle = floor((this.array.length - 1) / 2);
+        console.log(this.array);
+        for (var i = 0; i < this.array.length - 1; i += 2) {
+            if (this.array[i] > this.array[i + 1]) {
+                this.swap(i, i + 1);
+            }
+        }
+        console.log(this.array);
+        controller.sorting_mode = null;
     }
 } 

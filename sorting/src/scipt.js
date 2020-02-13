@@ -41,7 +41,7 @@ function draw () {
                     bundle.partitionLoop();
                 } else {
                     bundle.quickSort();
-                }
+                } console.log(controller.pivot);
                 break;
             case "merge":
                 tempo = mergeSort(tempo);

@@ -178,6 +178,7 @@ class Bundle {
         controller.tempo_j = controller.end - 2;
         controller.pivot = this.array[controller.partition];
         this.swap(controller.partition, controller.end - 1);
+
     }
 
     quickSort() {
@@ -186,13 +187,12 @@ class Bundle {
             controller.start = controller.stack.pop();
 
             if (controller.end - controller.start >= 2) {
-                controller.partition = controller.start + floor((controller.end - controller.start) / 2);
-                
-                this.resetOverglow();
-                this.addToOverglow(controller.pivot, '0, 242, 255');
+                controller.partition = controller.start;
                 
                 this.partition();
                 controller.partition_loop = true; // stop this function ultil the partition is over
+                this.resetOverglow();
+                this.addToOverglow(controller.pivot, '0, 242, 255');
             }
         } else {
             this.resetOverglow();

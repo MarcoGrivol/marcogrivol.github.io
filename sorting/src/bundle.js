@@ -202,46 +202,65 @@ class Bundle {
         }
     }
 
-    merge(from,  mid, to) {
-        var k = from;
-        var i = from;
-        var j = mid + 1;
+    // merge(from,  mid, to) {
+    //     var k = from;
+    //     var i = from;
+    //     var j = mid + 1;
 
-        // loop till there are elements in the left and right runs
-        while (i <= mid && j <= to) {
-            if (this.array[i] < this.array[j]) {
-                controller.temp[k++] = this.array[i++];
-            } else {
-                controller.temp[k++] = this.array[j++];
-            }
-        }
+    //     // loop till there are elements in the left and right runs
+    //     while (i <= mid && j <= to) {
+    //         if (this.array[i] < this.array[j]) {
+    //             controller.temp[k++] = this.array[i++];
+    //         } else {
+    //             controller.temp[k++] = this.array[j++];
+    //         }
+    //     }
 
-        // Copy remaining elements
-        while (i < this.array.length && i <= mid) {
-            controller.temp[k++] = this.array[i++];
-        }
+    //     // Copy remaining elements
+    //     while (i < this.array.length && i <= mid) {
+    //         controller.temp[k++] = this.array[i++];
+    //     }
 
-        // copy back to the original array to reflect sorted order
-        for (i = from; i <= to; i++) {
-            this.array[i] = controller.temp[i];
-        }
-    }   
+    //     // copy back to the original array to reflect sorted order
+    //     for (i = from; i <= to; i++) {
+    //         this.array[i] = controller.temp[i];
+    //     }
+    // }   
+
+    // mergeSort() {
+    //     controller.temp = this.array.slice();
+    //     controller.high = this.array.length - 1;
+    //     controller.low = 0;
+
+    //     for (var m = 1; m <= controller.high - controller.low; m = 2 * m) {
+    //         for (var i = controller.low; i < controller.high; i += 2 * m) {
+    //             var from = i;
+    //             var mid = i + m - 1;
+    //             var to = Math.min(i + (2 * m) - 1, controller.high);
+
+    //             this.merge(from, mid, to);
+    //         }
+    //     }
+        
+    //     controller.sorting_mode = null;
+    // }
 
     mergeSort() {
-        controller.temp = this.array.slice();
-        controller.high = this.array.length - 1;
-        controller.low = 0;
+        if (controller.m <= controller.high - controller.low) {
+            if (controller.tempo_i < controller.high) {
 
-        for (var m = 1; m <= controller.high - controller.low; m = 2 * m) {
-            for (var i = controller.low; i < controller.high; i += 2 * m) {
-                var from = i;
-                var mid = i + m - 1;
-                var to = Math.min(i + (2 * m) - 1, controller.high);
-
-                this.merge(from, mid, to);
+                controller.tempo_i++;
             }
+            controller.m++;
+        } else {
+            delete (controller.temp);
+            delete (controller.high);
+            delete (controller.low);
+            delete (controller.m);
+            delete (controller.from);
+            delete (controller.mid);
+            delete (controller.to);
+            controller.sorting_mode = null;
         }
-        
-        controller.sorting_mode = null;
     }
 } 

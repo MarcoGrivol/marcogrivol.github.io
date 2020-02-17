@@ -70,5 +70,7 @@ function setQuickSort() {
 function setMergeSort() {
     controller.sorting_mode = "merge";
     controller.resetFpsAndTempo();
-    bundle.resetOverglow();
+    controller.temp = bundle.array.slice();
+    controller.high = this.array_length - 1;
+    controller.low = 0;
 }

@@ -245,13 +245,48 @@ class Bundle {
     //     controller.sorting_mode = null;
     // }
 
+    merge () {
+        this.resetOverglow();
+        if (controller.merge_i <= controller.mid && controller.merge_j <= controller.to) {
+            if (controller.temp[controller.merge_i] < controller.temp[controller.merge_j]) {
+                this.array[controller.merge_k++] = controller.temp[controller.merge_i++];
+            } else {
+                this.array[controller.merge_k++] = controller.temp[controller.merge_j++];
+            }       
+            this.addToOverglow(controller.merge_i, 'purple');
+            this.addToOverglow(controller.merge_j, 'green');
+            this.addToOverglow(controller.merge_k, '204, 255, 0');
+        } else {
+            while (controller.merge_i < this.array.length && controller.merge_i <= controller.mid) {
+                this.array[controller.merge_k++] = controller.temp[controller.merge_i++];
+            }
+            for (controller.merge_i = controller.from; controller.merge_i <= controller.to; controller.merge_i++) {
+                controller.temp[controller.merge_i] = this.array[controller.merge_i];
+            }
+            // end merge function
+            controller.merge_loop = false;
+        }
+    }
+
     mergeSort() {
         if (controller.m <= controller.high - controller.low) {
             if (controller.tempo_i < controller.high) {
 
-                controller.tempo_i++;
+                controller.from = controller.tempo_i;
+                controller.mid = controller.tempo_i + controller.m - 1;
+                controller.to = Math.min(controller.tempo_i + (2 * controller.m) - 1, controller.high);
+                        
+                controller.merge_i = controller.from;
+                controller.merge_j = controller.mid + 1;
+                controller.merge_k = controller.from;
+
+                controller.merge_loop = true;
+
+                controller.tempo_i += 2 * controller.m;
+            } else {
+                controller.tempo_i = controller.low;
+                controller.m = controller.m * 2;
             }
-            controller.m++;
         } else {
             delete (controller.temp);
             delete (controller.high);
@@ -260,6 +295,10 @@ class Bundle {
             delete (controller.from);
             delete (controller.mid);
             delete (controller.to);
+            delete (controller.merge_i);
+            delete (controller.merge_j);
+            delete (controller.merge_k);
+            delete (controller.merge_loop);
             controller.sorting_mode = null;
         }
     }

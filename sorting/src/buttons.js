@@ -71,6 +71,17 @@ function setMergeSort() {
     controller.sorting_mode = "merge";
     controller.resetFpsAndTempo();
     controller.temp = bundle.array.slice();
-    controller.high = this.array_length - 1;
+    controller.m = 1;
+    controller.tempo_i = 0;
+    controller.high = controller.array_length - 1;
     controller.low = 0;
+    controller.merge_loop = false; // switch between the mergeSort and merge functions
+    // variables to be defined in mergeSort and used in merge
+    controller.from = null;
+    controller.mid = null;
+    controller.to = null;
+    // variables to be used in the merge function
+    controller.merge_i = null; 
+    controller.merge_j = null;
+    controller.merge_k = null;
 }

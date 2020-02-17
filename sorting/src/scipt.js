@@ -41,10 +41,14 @@ function draw () {
                     bundle.partitionLoop();
                 } else {
                     bundle.quickSort();
-                } console.log(controller.pivot);
+                }
                 break;
             case "merge":
-                bundle.mergeSort();
+                if (controller.merge_loop) {
+                    bundle.merge();
+                } else {
+                    bundle.mergeSort();
+                }
                 break;
             default:
                 break;

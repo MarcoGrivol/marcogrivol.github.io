@@ -85,3 +85,11 @@ function setMergeSort() {
     controller.merge_j = null;
     controller.merge_k = null;
 }
+
+function setBarDrawingMode() {
+    controller.drawing_mode = "bar";
+}
+
+function setCircleDrawingMode() {
+    controller.drawing_mode = "circle";
+}

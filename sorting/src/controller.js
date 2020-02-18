@@ -5,6 +5,7 @@ class Controller {
         this.tempo_i = null;
         this.tempo_j = null;
         this.sorting_mode = null;
+        this.drawing_mode = "bar";
         this.width = width;
         this.height = height;
         this.array_length = 50; // should be the same as in main.html length_slider

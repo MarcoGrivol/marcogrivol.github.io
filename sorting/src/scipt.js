@@ -19,8 +19,17 @@ function setup () {
 
 function draw () {
     background(255);
-    bundle.drawArray();
-    bundle.drawOverglow();
+    
+    switch (controller.drawing_mode) {
+        case "bar":
+            bundle.drawBar();
+            break;
+        case "circle":
+            bundle.drawCircle();
+            break;
+        default:
+            break;
+    }
 
     // controls the speed
     controller.fps_count++;

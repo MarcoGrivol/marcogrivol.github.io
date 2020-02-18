@@ -1,7 +1,9 @@
 class Bundle {
     constructor(width, height, length) {
-        this.width = width / length;
-        this.height = height / length;
+        this.window_width = width;
+        this.window_height = height;
+        this.width = width / length; // const width of each element
+        this.height = height / length; // const height of each element
         this.array = new Array(length);
         for (var i = 0; i < this.array.length; i++) {
             this.array[i] = i + 1;
@@ -18,22 +20,45 @@ class Bundle {
         }
     }
 
-    drawElement(index, color) {
-        stroke(0);
-        color = color.split(', ');
-        if (color.length > 1) {
-            fill(color[0], color[1], color[2]);
-        } else {
-            fill(color[0]);
+    drawBar() {
+        for (var i = 0 ; i < this.array.length; i++) {
+            stroke(0);
+            strokeWeight(1);
+            if (this.overglow_index.includes(i)) {
+                var index = this.overglow_index.indexOf(i);
+                var color = this.overglow_color[index].split(', ');
+                if (color.length > 1) {
+                    fill(color[0], color[1], color[2]);
+                } else {
+                    fill(color[0]); // removes this for only RGB
+                }
+            } else { 
+                fill(209, 209, 209);
+            }
+            var height = this.height * this.array[i];
+            rect(i * this.width, this.window_height - height, this.width, height);
         }
-        rect(index * this.width, 0, this.width, this.height * this.array[index]);
     }
 
-    drawArray() {
+    drawCircle() {
         for (var i = 0; i < this.array.length; i++) {
-            stroke(0);
-            fill(209, 209, 209);
-            rect(i * this.width, 0, this.width, this.height * this.array[i]);
+            stroke('gray');
+            strokeWeight(5);
+            noFill();
+            ellipse((i * this.width) + this.height, this.window_height / 2, this.height * this.array[i]);
+        }
+        // draw the overglow after so it overrides the gray color
+        for (var i = 0; i < this.overglow_index.length; i++) {
+            var index = this.overglow_index[i];
+            var color = this.overglow_color[i].split(', ');
+            if (color.length > 1) {
+                stroke(color[0], color[1], color[2]);
+            } else {
+                stroke(color[0]); // removes this for only RGB
+            }
+            strokeWeight(5);
+            noFill();
+            ellipse((index * this.width) + this.height, this.window_height / 2, this.height * this.array[index]);
         }
     }
 
@@ -45,12 +70,6 @@ class Bundle {
     resetOverglow() {
         this.overglow_index = [];
         this.overglow_color = [];
-    }
-
-    drawOverglow() {
-        for (var i = 0; i < this.overglow_index.length; i++) {
-            this.drawElement(this.overglow_index[i], this.overglow_color[i]);
-        }
     }
 
     swap(i, j) {
@@ -201,49 +220,6 @@ class Bundle {
             controller.sorting_mode = null;
         }
     }
-
-    // merge(from,  mid, to) {
-    //     var k = from;
-    //     var i = from;
-    //     var j = mid + 1;
-
-    //     // loop till there are elements in the left and right runs
-    //     while (i <= mid && j <= to) {
-    //         if (this.array[i] < this.array[j]) {
-    //             controller.temp[k++] = this.array[i++];
-    //         } else {
-    //             controller.temp[k++] = this.array[j++];
-    //         }
-    //     }
-
-    //     // Copy remaining elements
-    //     while (i < this.array.length && i <= mid) {
-    //         controller.temp[k++] = this.array[i++];
-    //     }
-
-    //     // copy back to the original array to reflect sorted order
-    //     for (i = from; i <= to; i++) {
-    //         this.array[i] = controller.temp[i];
-    //     }
-    // }   
-
-    // mergeSort() {
-    //     controller.temp = this.array.slice();
-    //     controller.high = this.array.length - 1;
-    //     controller.low = 0;
-
-    //     for (var m = 1; m <= controller.high - controller.low; m = 2 * m) {
-    //         for (var i = controller.low; i < controller.high; i += 2 * m) {
-    //             var from = i;
-    //             var mid = i + m - 1;
-    //             var to = Math.min(i + (2 * m) - 1, controller.high);
-
-    //             this.merge(from, mid, to);
-    //         }
-    //     }
-        
-    //     controller.sorting_mode = null;
-    // }
 
     merge () {
         this.resetOverglow();

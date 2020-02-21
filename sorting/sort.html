@@ -6,23 +6,23 @@
         <title>Maze Runner</title>
     </head>
    <body>
-        <a href="https://marcogrivol.github.io/">
-            <button>Home</button>
-        </a>
-        <button onclick="setShuffle()">Shuffle</button>
-        <button onclick="setBubbleSort()">Bubble Sort</button>
-        <button onclick="setInsertionSort()">Insertion Sort</button>
-        <button onclick="setSelectionSort()">Selection Sort</button>
-        <button onclick="setQuickSort()">Quick Sort</button>
-        <button onclick="setMergeSort()">Merge Sort</button>
-        <select class="form-control">
-            <option onclick="setBarDrawingMode()">Bar</option>
-            <option onclick="setCircleDrawingMode()">Circle</option>
-        </select>
-        <input type="range" min="1" max="30" value="15" id="speed_slider"">
-        Speed:<span id="show_speed"></span>
-        <input type="range" min="5" max="300" value="50" id="length_slider">
-        Array Length:<span id="show_length"></span>
+       <div id="buttons_div">
+            <button onclick="setShuffle()" class="button" style="background-color:#ff0000">Shuffle</button>
+            <button onclick="setBubbleSort()" class="button" style="background-color:#ff9100">Bubble Sort</button>
+            <button onclick="setInsertionSort()" class="button" style="background-color:#cbda00">Insertion Sort</button>
+            <button onclick="setSelectionSort()" class="button" style="background-color:#00b609">Selection Sort</button>
+            <button onclick="setQuickSort()" class="button" style="background-color:#0066ff">Quick Sort</button>
+            <button onclick="setMergeSort()" class="button" style="background-color:#e100ff">Merge Sort</button>
+       </div>
+       <div>
+            <button onclick="setBarDrawingMode()" class="button">Bar</button>
+            <button onclick="setCircleDrawingMode()" class="button">Circle</button>
+        
+            <input type="range" min="1" max="30" value="15" id="speed_slider"">
+            Speed:<span id="show_speed"></span>
+            <input type="range" min="5" max="300" value="50" id="length_slider">
+            Array Length:<span id="show_length"></span>
+        </div>
 
         <div id="canvas"></div>
 

@@ -11,6 +11,7 @@ var winds = [];
 var canvas_width = 800;
 var canvas_height = 800;
 var resolution = 10;
+var OVER_WIND = 10;
 var grid = new windGrid(canvas_width, canvas_height, resolution);
 
 function setup() {
@@ -38,6 +39,7 @@ function draw() {
             var [flag, index_i, index_j] = grid.checkWind(bubbles[i].getPos())
             if (flag) {
                 var w = grid.windParameters(index_i, index_j);
+                bubbles[i].setOverWind();
                 bubbles[i].windEffect(w);
             }
             bubbles[i].float();

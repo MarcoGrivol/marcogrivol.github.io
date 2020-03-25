@@ -26,39 +26,39 @@ class Bubble {
             this.over_wind_counter--;
         }
         this.y -= this.gravity;
-        this.gravity += gravity_constant;
+        this.gravity += GRAVITY_CONSTANT;
     }
 
     windEffect(wind) {
         this.wind = wind;
-        var [heading, strength] = wind;
+        var heading = wind;
         if (heading > 0 && heading < 90) {
             // nordeste
             var y_offset = heading / 90;
             var x_offset = 1 - y_offset;
-            this.x += x_offset * strength;
-            this.y -= y_offset * strength;
+            this.x += x_offset * WIND_STRENGTH;
+            this.y -= y_offset * WIND_STRENGTH;
         }
         else if (heading > 90 && heading < 180) {
             // noroeste
             var x_offset = heading / 180;
             var y_offset = 1 - x_offset;
-            this.x -= x_offset * strength;
-            this.y -= y_offset * strength;
+            this.x -= x_offset * WIND_STRENGTH;
+            this.y -= y_offset * WIND_STRENGTH;
         }
         else if (heading > -180 && heading < -90) {
             // sudoeste
             var y_offset = heading / -180;
             var x_offset = 1 - y_offset;
-            this.x -= x_offset * strength;
-            this.y += y_offset * strength;
+            this.x -= x_offset * WIND_STRENGTH;
+            this.y += y_offset * WIND_STRENGTH;
         }
         else if (heading > -90 && heading < 0) {
             // sudeste
             var y_offset = heading / -90;
             var x_offset = 1 - y_offset;
-            this.x += x_offset * strength;
-            this.y += y_offset * strength;
+            this.x += x_offset * WIND_STRENGTH;
+            this.y += y_offset * WIND_STRENGTH;
         }
         if (heading == 0 || heading == 180) {
             // horizontal
@@ -67,7 +67,7 @@ class Bubble {
             } else {
                 var x_offset = -1;
             }
-            this.x += x_offset * strength;
+            this.x += x_offset * WIND_STRENGTH;
         } 
         else if (heading == 90 || heading == -90) {
             // vertical
@@ -76,7 +76,7 @@ class Bubble {
             } else {
                 var y_offset = -1;
             }
-            this.y += y_offset * strength;
+            this.y += y_offset * WIND_STRENGTH;
         }
     }
 
@@ -142,7 +142,6 @@ class windSettings {
         this.a = NaN;
         this.b = NaN;
         this.heading = NaN;
-        this.strength = 5;
     }
 
     getValue() {
@@ -162,7 +161,7 @@ class windSettings {
     }
 
     getCoordinates() {
-        return [this.heading, this.strength];
+        return this.heading;
     }
 }
 
@@ -172,8 +171,8 @@ class windGrid {
         this.width = width;
         this.height = height;
         this.resolution = resolution;
-        this.rows = Math.floor(this.width / this.resolution);
-        this.cols = Math.floor(this.height / this.resolution);
+        this.rows = Math.ceil(this.width / this.resolution);
+        this.cols = Math.ceil(this.height / this.resolution);
         this.grid = new Array(this.rows);
         for (var i = 0; i < this.rows; i++) {
             this.grid[i] = new Array(this.cols);
@@ -184,16 +183,16 @@ class windGrid {
     }
 
     draw() {
-        // for (var i = 0; i < this.rows; i++) {
-        //     for (var j = 0; j < this.cols; j++) {
-        //         stroke(0);
-        //         noFill();
-        //         if (this.grid[i][j].getValue()) {
-        //             fill('blue');
-        //         }
-        //         rect(i * this.resolution, j * this.resolution, this.resolution, this.resolution);
-        //     }
-        // }
+        for (var i = 0; i < this.rows; i++) {
+            for (var j = 0; j < this.cols; j++) {
+                stroke(0);
+                noFill();
+                if (this.grid[i][j].getValue()) {
+                    fill('blue');
+                }
+                rect(i * this.resolution, j * this.resolution, this.resolution, this.resolution);
+            }
+        }
     }
 
     getIndex(mouseX, mouseY) {
@@ -204,8 +203,6 @@ class windGrid {
 
     setWind(mouseX, mouseY, point_a, point_b) {
         var [index_i, index_j] = this.getIndex(mouseX, mouseY);
-        // this.grid[i][j].setValue(true);
-        // this.grid[i][j].setCoordinates(point_a, point_b);
         for (var i = index_i - 1; i < this.rows && i <= index_i + 1; i++) {
             for (var j = index_j - 1; j < this.cols && j <= index_j + 1; j++) {
                 if (i >= 0 && j >= 0) {

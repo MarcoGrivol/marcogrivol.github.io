@@ -1,21 +1,32 @@
+var OVER_WIND = 10;
+var WIND_STRENGTH = 3;
+var CANVAS_WIDTH = 800;
+var CANVAS_HEIGHT = 800;
+var RESOLUTION = 10;
+var INTERVAL = 0; // 0: max, >0 time between eache bubble is spawned
+var GRAVITY_CONSTANT = 0.02;
 var rainbow_color = ['#FF0000', '#FF7F00', '#FFFF00',
                      '#00FF00', '#0000FF', '#2E2B5F', '#8B00FF'];
 var index = 0;
 var bubbles = [];
-var INTERVAL = 2;
 var interval_count = INTERVAL;
-var gravity_constant = 0.02;
 var point_a = point_b = [0, 0];
 var get_point_a = true;
 var winds = [];
-var canvas_width = 800;
-var canvas_height = 800;
-var resolution = 10;
-var OVER_WIND = 10;
-var grid = new windGrid(canvas_width, canvas_height, resolution);
+var grid = NaN;
 
 function setup() {
-    createCanvas(canvas_width, canvas_height);
+    // get div dimensions
+    var div = document.getElementById('canvas');
+    CANVAS_WIDTH = div.offsetWidth;
+    CANVAS_HEIGHT = div.offsetHeight;
+    // create the canvas
+    var canvas_div = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas_div.parent('canvas');
+    canvas_div.center();
+    console.log(div.offsetHeight, div.offsetWidth);
+    // define a grid for the wind effect
+    grid = new windGrid(CANVAS_WIDTH, CANVAS_HEIGHT, RESOLUTION);
 }
 
 function draw() {
@@ -26,10 +37,15 @@ function draw() {
         getBubble();
         resetPoints();
     }
-
+    // clear is important to remove old bubbles (last frame)
     clear();
+    background(51);
+    // grid draw HEAVILY slows the system, only use for debug
+    // increasing the resolution can increase perfonmance but sacrifices wind quality
+    //grid.draw();
     // draw the bubbles
     for (var i = 0; i < bubbles.length; i++) {
+        // delete bubbles not on screen
         if (bubbles[i].delete()) {
             bubbles.splice(i, 1);
             i--; // the list will be 1 short, this accounts for the resizing
@@ -49,7 +65,6 @@ function draw() {
     for (var i = 0; i < winds.length; i++) {
         winds[i].draw(); 
     }
-    grid.draw();
     timing();
 }
 
@@ -108,8 +123,8 @@ function resetPoints() {
 }
 
 function isMouseInCanvas(mouseX, mouseY) {
-    if (mouseX < canvas_width && mouseX > 0) {
-        if (mouseY < canvas_height && mouseY > 0) {
+    if (mouseX < CANVAS_WIDTH && mouseX > 0) {
+        if (mouseY < CANVAS_HEIGHT && mouseY > 0) {
             return true;
         } return false;
     } return false;
